@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "build": "node config/scripts/build.js",
+    "build:ts": "tsc",
     "prepublish": "npm run build"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "ora": "^5.0.0",
+    "tsc": "^2.0.3",
     "webpack": "^4.44.1",
     "webpack-merge": "^5.1.2"
   },
