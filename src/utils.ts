@@ -1,8 +1,10 @@
-export function getMatomo () {
-  return window.Piwik.getAsyncTracker()
+import VueRouter from 'vue-router'
+
+export function getMatomo() {
+  return window.Matomo.getAsyncTracker()
 }
 
-export function loadScript (trackerScript) {
+export function loadScript(trackerScript: string): Promise<Event> {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script')
     script.async = true
@@ -17,6 +19,6 @@ export function loadScript (trackerScript) {
   })
 }
 
-export function getResolvedHref (router, path) {
+export function getResolvedHref(router: VueRouter, path: string): string {
   return router.resolve(path).href
 }
