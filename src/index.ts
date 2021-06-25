@@ -1,3 +1,6 @@
+import { App } from 'vue'
+import { RouteLocationNormalizedLoaded } from 'vue-router'
+import { Options } from './types'
 import { getMatomo, getResolvedHref, loadScript } from './utils'
 
 const defaultOptions = {
@@ -20,12 +23,12 @@ const defaultOptions = {
 
 export const matomoKey = 'Matomo'
 
-function trackMatomoPageView (options, to, from) {
+function trackMatomoPageView(options: Options, to: RouteLocationNormalizedLoaded, from?: RouteLocationNormalizedLoaded): void {
   const Matomo = getMatomo()
 
-  let title
-  let url
-  let referrerUrl
+  let title: string
+  let url: string
+  let referrerUrl: string
 
   if (options.router) {
     url = getResolvedHref(options.router, to.fullPath)
@@ -39,7 +42,7 @@ function trackMatomoPageView (options, to, from) {
     }
 
     options.debug && console.debug('[vue-matomo] Tracking ' + url)
-    title = to.meta.title || url
+    title = String(to.meta.title) || url
   }
 
   if (referrerUrl) {
@@ -52,31 +55,32 @@ function trackMatomoPageView (options, to, from) {
   Matomo.trackPageView(title)
 }
 
-function initMatomo (Vue, options) {
+
+function initMatomo(Vue: App, options: Options): void {
   const Matomo = getMatomo()
 
   const version = Number(Vue.version.split('.')[0])
 
   if (version > 2) {
-    Vue.config.globalProperties.$piwik = Matomo
+    //Vue.config.globalProperties.$piwik = Matomo
     Vue.config.globalProperties.$matomo = Matomo
     Vue.provide(matomoKey, Matomo)
   } else {
-    Vue.prototype.$piwik = Matomo
-    Vue.prototype.$matomo = Matomo
+    //Vue.prototype.$piwik = Matomo
+    Vue.config.globalProperties.$matomo = Matomo
   }
 
   if (options.trackInitialView && options.router) {
     // Vue 3 must use currentRoute.value
     const currentRoute = options.router.currentRoute.value
-      ? options.router.currentRoute.value
-      : options.router.currentRoute
+    //  ? options.router.currentRoute.value
+    //  : options.router.currentRoute
 
     // Register first page view
     trackMatomoPageView(options, currentRoute)
   }
 
-  // Track page navigations if router is specified
+  // Track page navigation if router is specified
   if (options.router) {
     options.router.afterEach((to, from) => {
       trackMatomoPageView(options, to, from)
@@ -88,10 +92,10 @@ function initMatomo (Vue, options) {
   }
 }
 
-function piwikExists () {
-  // In case of TMS,  we load a first container_XXX.js which triggers aynchronously the loading of the standard Piwik.js
-  // this will avoid the error throwed in initMatomo when window.Piwik is undefined
-  // if window.Piwik is still undefined when counter reaches 3000ms we reject and go to error
+function matomoExists(): Promise<void> {
+  // In case of TMS,  we load a first container_XXX.js which triggers asynchronously the loading of the standard matomo.js
+  // this will avoid the error thrown in initMatomo when window.Matomo is undefined
+  // if window.Matomo is still undefined when counter reaches 3000ms we reject and go to error
 
   return new Promise((resolve, reject) => {
     const checkInterval = 50
@@ -99,7 +103,7 @@ function piwikExists () {
     const waitStart = Date.now()
 
     const interval = setInterval(() => {
-      if (window.Piwik) {
+      if (window.Matomo || window.Piwik) {
         clearInterval(interval)
 
         return resolve()
@@ -108,13 +112,13 @@ function piwikExists () {
       if (Date.now() >= waitStart + timeout) {
         clearInterval(interval)
 
-        throw new Error(`[vue-matomo]: window.Piwik undefined after waiting for ${timeout}ms`)
+        throw new Error(`[vue-matomo]: window.Matomo undefined after waiting for ${timeout}ms`)
       }
     }, checkInterval)
   })
 }
 
-export default function install (Vue, setupOptions = {}) {
+function install(Vue: App, setupOptions: Options = {}): void {
   const options = Object.assign({}, defaultOptions, setupOptions)
 
   const { host, siteId, trackerFileName, trackerUrl, trackerScriptUrl } = options
@@ -122,7 +126,6 @@ export default function install (Vue, setupOptions = {}) {
   const trackerEndpoint = trackerUrl || `${host}/${trackerFileName}.php`
 
   window._paq = window._paq || []
-
   window._paq.push(['setTrackerUrl', trackerEndpoint])
   window._paq.push(['setSiteId', siteId])
 
@@ -132,6 +135,7 @@ export default function install (Vue, setupOptions = {}) {
 
   if (options.userId) {
     window._paq.push(['setUserId', options.userId])
+    window._paq.push(['ping'])
   }
 
   if (options.enableLinkTracking) {
@@ -161,7 +165,7 @@ export default function install (Vue, setupOptions = {}) {
   options.preInitActions.forEach((action) => window._paq.push(action))
 
   loadScript(trackerScript)
-    .then(() => piwikExists())
+    .then(() => matomoExists())
     .then(() => initMatomo(Vue, options))
     .catch((error) => {
       if (error.target) {
@@ -173,4 +177,8 @@ export default function install (Vue, setupOptions = {}) {
 
       console.error(error)
     })
+}
+
+export default {
+  install
 }

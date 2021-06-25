@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import { Router } from 'vue-router'
 
 export function getMatomo() {
   return window.Matomo.getAsyncTracker()
@@ -10,7 +10,7 @@ export function loadScript(trackerScript: string): Promise<Event> {
     script.async = true
     script.defer = true
     script.src = trackerScript
-    
+
     document.head.appendChild(script)
 
     script.onload = resolve
@@ -18,6 +18,6 @@ export function loadScript(trackerScript: string): Promise<Event> {
   })
 }
 
-export function getResolvedHref(router: VueRouter, path: string): string {
+export function getResolvedHref(router: Router, path: string): string {
   return router.resolve(path).href
 }
