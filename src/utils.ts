@@ -10,9 +10,8 @@ export function loadScript(trackerScript: string): Promise<Event> {
     script.async = true
     script.defer = true
     script.src = trackerScript
-
-    const head = document.head || document.getElementsByTagName('head')[0]
-    head.appendChild(script)
+    
+    document.head.appendChild(script)
 
     script.onload = resolve
     script.onerror = reject
