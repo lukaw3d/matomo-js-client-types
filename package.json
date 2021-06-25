@@ -52,5 +52,9 @@
     "LICENSE",
     "README.md",
     "package.json"
-  ]
+  ],
+  "peerDependencies": {
+    "vue": "^3",
+    "vue-router": "^4"
+  }
 }
