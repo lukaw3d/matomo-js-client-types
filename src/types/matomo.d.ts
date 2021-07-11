@@ -958,7 +958,6 @@ export namespace Matomo {
 		 *
 		 * @param bool if true, use first referrer (and first campaign)             if false, use the last referrer (or campaign)/
 		setConversionAttributionFirstReferrer: (enable) => unknown
-		
 
 		/**
 		 * Enable the Secure cookie flag on all first party cookies.
@@ -1102,7 +1101,6 @@ export namespace Matomo {
 		 */
 		addListener: (element: Element, enable: boolean) => void
 
-
 		/**
 		 * Install link tracker.
 		 *
@@ -1158,7 +1156,7 @@ export namespace Matomo {
 
 		/**
 		 * Set heartbeat (in seconds)
-		 * 
+		 *
 		 * @param heartBeatDelayInSeconds Defaults to 15s. Cannot be lower than 5.
 		 */
 		enableHeartBeatTimer: (heartBeatDelayInSeconds: number) => void
@@ -1175,7 +1173,7 @@ export namespace Matomo {
 
 		/**
 		 * Redirect if browsing offline (aka file: buster).
-		 * 
+		 *
 		 * @param url Redirect to this URL
 		 */
 		redirectFile: (url: string) => void
@@ -1205,7 +1203,7 @@ export namespace Matomo {
 		/**
 		 * Log visit to this page
 		 */
-		trackPageView: (customTitle: string, customData?: any, callback?: Function) => void
+		trackPageView: (customTitle?: string, customData?: any, callback?: Function) => void
 
 		/**
 		 * Scans the entire DOM for all content blocks and tracks all impressions once the DOM ready event has

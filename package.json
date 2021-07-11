@@ -1,50 +1,52 @@
 {
   "name": "vue-matomo",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Link your Piwik/Matomo installation",
   "author": "Dennis Ruhe <dennis@amazingsystems.nl>",
   "license": "MIT",
-  "main": "dist/vue-matomo.js",
+  "main": "dist/cjs/vue-matomo.js",
+  "module": "dist/esm/vue-matomo.js",
+  "browser": "dist/browser/vue-matomo.js",
   "repository": "https://github.com/AmazingDreams/vue-matomo",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "lint": "eslint --ext .js,.vue src",
-    "lint:fix": "eslint --ext .js,.vue src --fix",
-    "build": "node config/scripts/build.js",
-    "build:ts": "tsc",
+    "clean": "npx rimraf dist",
+    "lint": "npx eslint 'src/**/*.ts'",
+    "lint:fix": "npx eslint --fix 'src/**/*.ts'",
+    "build": "npm run clean && npm run build:rollup",
+    "build:ts": "npx tsc",
+    "build:rollup": "npx rollup -c",
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.4",
-    "@babel/preset-env": "^7.11.0",
-    "@vue/cli": "^4.5.4",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "compression-webpack-plugin": "^5.0.1",
-    "eslint": "^7.7.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^6.2.2",
-    "friendly-errors-webpack-plugin": "^1.6.1",
-    "ora": "^5.0.0",
-    "tsc": "^2.0.3",
-    "webpack": "^4.44.1",
-    "webpack-merge": "^5.1.2"
+    "eslint-plugin-vue": "^7.13.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.53.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.3.5"
   },
   "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">=14",
+    "npm": ">=7"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie"
   ],
   "files": [
     "/dist",
@@ -54,7 +56,7 @@
     "package.json"
   ],
   "peerDependencies": {
-    "vue": "^3",
+    "vue": "next",
     "vue-router": "^4"
   }
 }

@@ -1,13 +1,12 @@
 # VueMatomo
 
 [![npm](https://img.shields.io/npm/v/vue-matomo.svg)](https://www.npmjs.com/package/vue-matomo)
-[![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 [![vue3](https://img.shields.io/badge/vue-3.x-green.svg)](https://v3.vuejs.org/)
 [![npm](https://img.shields.io/npm/dw/vue-matomo.svg)](https://www.npmjs.com/package/vue-matomo)
 [![bundle-size](https://badgen.net/bundlephobia/min/vue-matomo)](https://bundlephobia.com/result?p=vue-matomo)
 [![license](https://img.shields.io/github/license/AmazingDreams/vue-matomo)](LICENSE)
 
-Link your Piwik/Matomo installation. Compatible with vue 2.x and 3.x.
+Link your Piwik/Matomo installation. Compatible with vue 3.x.
 
 ## Installation
 
@@ -117,7 +116,7 @@ this.$matomo
 window._paq.push
 
 // or through
-window.Piwik.getTracker
+window.Matomo.getTracker
 ```
 
 For available operations see the [matomo api docs](https://developer.matomo.org/api-reference/tracking-javascript)

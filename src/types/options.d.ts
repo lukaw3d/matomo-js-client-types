@@ -1,11 +1,4 @@
 import { Router } from 'vue-router'
-import { Matomo } from './matomo'
-
-declare module "@vue/runtime-core" {
-	interface ComponentCustomProperties {
-		$matomo: Matomo.Client;
-	}
-}
 
 export interface Options {
 	router?: Router
