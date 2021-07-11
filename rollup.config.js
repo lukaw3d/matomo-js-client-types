@@ -1,5 +1,6 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
+import dts from 'rollup-plugin-dts'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
@@ -15,50 +16,64 @@ const banner = `/**
  */
 `
 
-export default {
-	input: 'src/index.ts',
-	output: [
-		// CommonJS
-		{
-			file: packageJson.main,
-			format: 'cjs',
-			sourcemap: true,
-			banner,
-		},
+export default [
+	{
+		input: "build/tsc/index.d.ts",
+		output: [
+			{
+				file: "dist/types/vue-matomo.d.ts",
+				format: "es"
+			},
+		],
+		plugins: [
+			dts()
+		],
+	},
+	{
+		input: 'src/index.ts',
+		output: [
+			// CommonJS
+			{
+				file: packageJson.main,
+				format: 'cjs',
+				sourcemap: true,
+				banner,
+			},
 
-		// ESM
-		{
-			file:packageJson.module,
-			format: 'esm',
-			sourcemap: true,
-			banner,
-		},
+			// ESM
+			{
+				file:packageJson.module,
+				format: 'esm',
+				sourcemap: true,
+				banner,
+			},
 
-		// Browser
-		{
-			name: 'VueMatomo',
-			file: packageJson.browser,
-			format: "iife",
-			sourcemap: true,
-			banner,
-		},
+			// Browser
+			{
+				name: 'VueMatomo',
+				file: packageJson.browser,
+				format: "iife",
+				sourcemap: true,
+				banner,
+			},
 
-		// Browser (minified)
-		{
-			name: 'VueMatomo',
-			file: packageJson.browser.replace(/\.js$/, '.min.js'),
-			format: "iife",
-			sourcemap: true,
-			banner,
-			plugins: [
-				terser(),
-			],
-		},
-	],
-	plugins: [
-		peerDepsExternal(),
-		resolve(),
-		commonjs(),
-		typescript(),
-	],
-};
+			// Browser (minified)
+			{
+				name: 'VueMatomo',
+				file: packageJson.browser.replace(/\.js$/, '.min.js'),
+				format: "iife",
+				sourcemap: true,
+				banner,
+				plugins: [
+					terser(),
+				],
+			},
+		],
+		plugins: [
+			peerDepsExternal(),
+			resolve(),
+			commonjs(),
+			typescript(),
+		],
+	}
+]

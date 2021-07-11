@@ -7,15 +7,16 @@
   "main": "dist/cjs/vue-matomo.js",
   "module": "dist/esm/vue-matomo.js",
   "browser": "dist/browser/vue-matomo.js",
+  "types": "dist/types/vue-matomo.d.ts",
   "repository": "https://github.com/AmazingDreams/vue-matomo",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "clean": "npx rimraf dist",
+    "clean": "npx rimraf build && npx rimraf dist",
     "lint": "npx eslint 'src/**/*.ts'",
     "lint:fix": "npx eslint --fix 'src/**/*.ts'",
-    "build": "npm run clean && npm run build:rollup",
+    "build": "npm run clean && npm run build:ts && npm run build:rollup",
     "build:ts": "npx tsc",
     "build:rollup": "npx rollup -c",
     "prepublish": "npm run build"
@@ -35,6 +36,7 @@
     "eslint-plugin-vue": "^7.13.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.53.0",
+    "rollup-plugin-dts": "^3.0.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.3.5"

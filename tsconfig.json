@@ -8,7 +8,7 @@
 		//"resolveJsonModule": true,
 
 		"rootDir": "./src",
-		"outDir": "./build",
+		"outDir": "./build/tsc",
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "Node",
@@ -16,7 +16,8 @@
 		"strict": true,
 		"sourceMap": true,
 		"declaration": true,
-		"declarationDir": "./build/types",
+		//"declarationDir": "./build/types",
+		"emitDeclarationOnly": true
 	},
 	"include": [
 		"./src/**/*"
