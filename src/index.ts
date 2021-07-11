@@ -20,7 +20,7 @@ const defaultOptions = {
 export const matomoKey = 'Matomo'
 
 export class VueMatomo {
-	trackMatomoPageView(options: Options, to: RouteLocationNormalizedLoaded, from?: RouteLocationNormalizedLoaded): void {
+	static trackMatomoPageView(options: Options, to: RouteLocationNormalizedLoaded, from?: RouteLocationNormalizedLoaded): void {
 		const Matomo = getMatomo()
 
 		let title: string | undefined
@@ -49,7 +49,7 @@ export class VueMatomo {
 		Matomo.trackPageView(title)
 	}
 
-	initMatomo(Vue: App, options: Options): void {
+	static initMatomo(Vue: App, options: Options): void {
 		const Matomo = getMatomo()
 
 		const version = Number(Vue.version.split('.')[0])
@@ -85,7 +85,7 @@ export class VueMatomo {
 		}
 	}
 
-	matomoExists(): Promise<void> {
+	static matomoExists(): Promise<void> {
 		// In case of TMS,  we load a first container_XXX.js which triggers asynchronously the loading of the standard matomo.js
 		// this will avoid the error thrown in initMatomo when window.Matomo is undefined
 		// if window.Matomo is still undefined when counter reaches 3000ms we reject and go to error
@@ -111,7 +111,7 @@ export class VueMatomo {
 		})
 	}
 
-	install(Vue: App, setupOptions: Options = {}): void {
+	static install(Vue: App, setupOptions: Options = {}): void {
 		const options = Object.assign({}, defaultOptions, setupOptions)
 
 		const { host, trackerFileName, trackerUrl, trackerScriptUrl } = options
@@ -178,7 +178,7 @@ export class VueMatomo {
 
 declare module '@vue/runtime-core' {
 	interface App {
-		use(plugin: VueMatomo, options: Options): this;
+		use(plugin: typeof VueMatomo, options: Options): this;
 	}
 
 	export interface ComponentCustomProperties {
