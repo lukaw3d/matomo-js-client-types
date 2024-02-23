@@ -18,3 +18,12 @@ window._paq.push([function () {
   // @ts-expect-error Should detect incorrect returns
   const b: string = this.hasRememberedConsent()
 }])
+
+
+window._paq.push(['trackPageView'])
+window._paq.push(['trackPageView', 'Custom title'])
+window._paq.push(['trackPageView', 'Custom title', {customData: 1}])
+window._paq.push(['trackPageView', 'Custom title', {customData: 1}, () => {}])
+
+// @ts-expect-error Should detect incorrect types
+window._paq.push(['trackPageView', 1, 2, 3])
