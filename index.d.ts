@@ -420,7 +420,7 @@ export namespace Matomo {
 	}
 
 	export interface TrackerProxy {
-		push<K extends keyof TrackingAPIMethodMap>(parameterArray: [ K, ...TrackingAPIMethodArguments[K] ] | [ Function, ...any ]): void
+		push<K extends keyof TrackingAPIMethodMap>(parameterArray: [ K, ...TrackingAPIMethodArguments[K] ] | [ (this: Tracker) => void, ...any ]): void
 	}
 
 	export interface Tracker {
