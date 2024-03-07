@@ -6,7 +6,7 @@ Matomo JavaScript Tracking Client docs https://developer.matomo.org/api-referenc
 
 Usage:
 ```ts
-/// <reference types="matomo-types" />
+/// <reference types="matomo-js-client-types" />
 // Strictly typed now:
 window._paq = window._paq || []
 window._paq.push(['setSiteId', '3'])
