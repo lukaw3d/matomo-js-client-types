@@ -1,0 +1,12 @@
+{
+  "name": "matomo-js-client-types",
+  "description": "Types for Matomo window._paq",
+  "version": "5.0.0",
+  "keywords": ["matomo", "piwik", "types"],
+  "license": "MIT",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukaw3d/matomo-js-client-types.git"
+  }
+}

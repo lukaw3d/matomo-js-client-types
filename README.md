@@ -5,6 +5,9 @@ Matomo JavaScript Tracking Client source code https://github.com/matomo-org/mato
 Matomo JavaScript Tracking Client docs https://developer.matomo.org/api-reference/tracking-javascript
 
 Usage:
+
+`npm i -D matomo-js-client-types`
+
 ```ts
 /// <reference types="matomo-js-client-types" />
 // Strictly typed now:
